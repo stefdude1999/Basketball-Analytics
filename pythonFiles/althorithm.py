@@ -18,17 +18,6 @@ import pandas as pd
 #if team A is the host and team B is the visitor,
 #effective field goal percentage is A efgp home - B efgp road
 
-# from datetime import datetime
-# from sportsreference.nba.boxscore import Boxscores
-# from sportsreference.nba.boxscore import Boxscore
-# # Pulls all games between and including January 1, 2018 and January 5, 2018
-# gamesSet = Boxscores(datetime(2018, 1, 1), datetime(2018, 1, 5))
-# # Prints a dictionary of all results from January 1, 2018 and January 5,
-# # 2018
-# #print(gamesSet.games)
-# for x in gamesSet.games:
-# 	print(x)
-
 from sportsreference.nba.schedule import Schedule
 from sportsreference.nba.boxscore import Boxscore
 
@@ -36,6 +25,16 @@ team_abbr = input("Enter the team abbreviation: ")
 team_year = input("Enter the team year: ")
 team_schedule = Schedule(team_abbr, team_year)
 list_points = []
+
+#Lists for stats
+list_location = []
+list_efg = []
+list_or = []
+list_to = []
+list_ft = []
+list_ora = []
+list_dra = []
+
 for game in team_schedule:
  	game_data = Boxscore(game.boxscore_index)
  	team_to_use = ''
@@ -44,21 +43,42 @@ for game in team_schedule:
  		# print(game_data.losing_name)
  		# print(game_data.away_points)
  		# print("Away")
- 		# print("weeee")
- 		list_points.append(game_data.away_points)
+ 		# print("break")
+ 		#list_points.append(game_data.away_points)
+ 		list_efg.append(game_data.away_effective_field_goal_percentage)
+ 		list_location.append('Away')
+ 		list_or.append(game_data.away_offensive_rebound_percentage)
+ 		list_to.append(game_data.away_turnover_percentage)
+ 		list_ft.append(game_data.away_free_throw_percentage)
+ 		list_ora.append(game_data.away_offensive_rating)
+ 		list_dra.append(game_data.away_defensive_rating)
+
  	elif game_data.away_points > game_data.home_points and game_data.losing_abbr == team_abbr:
  		# print(game_data.winning_name)
  		# print(game_data.losing_name)
  		# print(game_data.home_points)
  		# print("Home")
- 		# print("weeee")
- 		list_points.append(game_data.home_points)
-# 	if game_data.away_abbr == 'HOU':
-# 		list.append(game_data.away_points)
-# 	else: 
-# 		list.append(game_data.home_points)
+ 		# print("break")
+ 		#list_points.append(game_data.home_points)
+ 		list_efg.append(game_data.home_effective_field_goal_percentage)
+ 		list_location.append('Home')
+ 		list_or.append(game_data.home_offensive_rebound_percentage)
+ 		list_to.append(game_data.home_turnover_percentage)
+ 		list_ft.append(game_data.home_free_throw_percentage)
+ 		list_ora.append(game_data.home_offensive_rating)
+ 		list_dra.append(game_data.home_defensive_rating)
 
-data = {'Points':list_points}
+data = {'Location':list_location, 
+		'Effective Field Goals':list_efg, 
+		'Offensive Rebounds':list_or, 
+		'Turnovers':list_to,
+		'Freethrows':list_ft,
+		'Offensive Rating':list_ora,
+		'Defensive Rating':list_dra}
+
 df = pd.DataFrame(data)
 
 print(df)
+
+
+    
