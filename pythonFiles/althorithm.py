@@ -17,14 +17,10 @@ import pandas as pd
 #if team A is the host and team B is the visitor,
 #effective field goal percentage is A efgp home - B efgp road
 
-col_names = ['efgpd', 'tpd', 'orpd', 'ftfgad', 'ord', 'drd', 
-'efgpdc', 'tpdc', 'orpdc', 'ftfgadc', 'ordc', 'drdc'];
+from sportsreference.nba.schedule import Schedule
+from sportsreference.nba.boxscore import Boxscore
 
-pima = dataset;
-pima.head();
-
-X = pima[col_names];
-Y = pima.label;
-
-from sklearn.cross_validation import train_test_split
-X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.25,random_state=0)
+houston_schedule = Schedule('HOU', 2018)
+for game in houston_schedule:
+	game_data = Boxscore(game.boxscore_index)
+	print(game_data.away_points)
