@@ -1,5 +1,4 @@
 import pandas as pd
-
 #effective field goal perentage difference: 0.16118265
 #turnover percentage difference: -0.05958713
 #offensive rebound percentage difference: 0.07061777
@@ -18,67 +17,29 @@ import pandas as pd
 #if team A is the host and team B is the visitor,
 #effective field goal percentage is A efgp home - B efgp road
 
-from sportsreference.nba.schedule import Schedule
-from sportsreference.nba.boxscore import Boxscore
 
-team_abbr = input("Enter the team abbreviation: ")
-team_year = input("Enter the team year: ")
-team_schedule = Schedule(team_abbr, team_year)
-list_points = []
+teamA_abbr = input("Enter the first team abbreviation: ")
+teamA_year = input("Enter the first team year: ")
 
-#Lists for stats
-list_location = []
-list_efg = []
-list_or = []
-list_to = []
-list_ft = []
-list_ora = []
-list_dra = []
+avgA_stats = []
+avgB_stats = []
 
-for game in team_schedule:
- 	game_data = Boxscore(game.boxscore_index)
- 	team_to_use = ''
- 	if game_data.away_points > game_data.home_points and game_data.winning_abbr == team_abbr:
- 		# print(game_data.winning_name)
- 		# print(game_data.losing_name)
- 		# print(game_data.away_points)
- 		# print("Away")
- 		# print("break")
- 		#list_points.append(game_data.away_points)
- 		list_efg.append(game_data.away_effective_field_goal_percentage)
- 		list_location.append('Away')
- 		list_or.append(game_data.away_offensive_rebound_percentage)
- 		list_to.append(game_data.away_turnover_percentage)
- 		list_ft.append(game_data.away_free_throw_percentage)
- 		list_ora.append(game_data.away_offensive_rating)
- 		list_dra.append(game_data.away_defensive_rating)
+teamA = teamStats(teamA_abbr, teamA_year)
 
- 	elif game_data.away_points > game_data.home_points and game_data.losing_abbr == team_abbr:
- 		# print(game_data.winning_name)
- 		# print(game_data.losing_name)
- 		# print(game_data.home_points)
- 		# print("Home")
- 		# print("break")
- 		#list_points.append(game_data.home_points)
- 		list_efg.append(game_data.home_effective_field_goal_percentage)
- 		list_location.append('Home')
- 		list_or.append(game_data.home_offensive_rebound_percentage)
- 		list_to.append(game_data.home_turnover_percentage)
- 		list_ft.append(game_data.home_free_throw_percentage)
- 		list_ora.append(game_data.home_offensive_rating)
- 		list_dra.append(game_data.home_defensive_rating)
 
-data = {'Location':list_location, 
-		'Effective Field Goals':list_efg, 
-		'Offensive Rebounds':list_or, 
-		'Turnovers':list_to,
-		'Freethrows':list_ft,
-		'Offensive Rating':list_ora,
-		'Defensive Rating':list_dra}
+teamB_abbr = input("Enter the second team abbreviation: ")
+teamB_year = input("Enter the second team year: ")
+teamB = teamStats(teamB_abbr, teamB_year)
 
-df = pd.DataFrame(data)
+print("print A")
+avgA_stats = teamA.returnValue()
+for x in avgA_stats:
+	print(x)
 
-print(df)
+print("B")
+avgB_stats = teamB.returnValue()
+for y in avgB_stats:
+	print(y)
 
 
     
