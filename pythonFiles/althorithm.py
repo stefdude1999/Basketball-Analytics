@@ -1,4 +1,5 @@
 import pandas as pd
+from teamStats import teamStats
 #effective field goal perentage difference: 0.16118265
 #turnover percentage difference: -0.05958713
 #offensive rebound percentage difference: 0.07061777
